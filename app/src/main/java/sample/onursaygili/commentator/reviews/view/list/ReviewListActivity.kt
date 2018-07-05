@@ -1,29 +1,32 @@
-package sample.onursaygili.commentator
+package sample.onursaygili.commentator.reviews.view.list
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import sample.onursaygili.commentator.R
+import sample.onursaygili.commentator.common.util.ext.setContentFragment
+import javax.inject.Inject
 
-import kotlinx.android.synthetic.main.activity_comments.*
+class ReviewListActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
-class CommentsActivity : AppCompatActivity() {
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Fragment>
+
+    override fun supportFragmentInjector() = androidInjector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_comments)
-        setSupportActionBar(toolbar)
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        setContentView(R.layout.review_list_activity)
+        setContentFragment(R.id.containerLayout) { ReviewListFragment.newInstance() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_comments, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
